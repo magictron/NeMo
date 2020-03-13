@@ -6,3 +6,4 @@ torchtext
 transformers
 unidecode
 youtokentome
+fuzzywuzzy
