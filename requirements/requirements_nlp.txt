@@ -7,3 +7,6 @@ transformers
 unidecode
 youtokentome
 fuzzywuzzy
+numpy
+tqdm
+sklearn

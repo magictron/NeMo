@@ -208,7 +208,7 @@ def create_pipeline(
             hidden_size=hidden_size, num_classes=len(label_ids), dropout=dropout, num_layers=num_layers
         )
 
-        task_loss = CrossEntropyLossNM(logits_dim=3, weight=class_weights)
+        task_loss = CrossEntropyLossNM(logits_ndim=3, weight=class_weights)
 
     hidden_states = model(input_ids=input_ids, token_type_ids=input_type_ids, attention_mask=input_mask)
     logits = classifier(hidden_states=hidden_states)
@@ -232,7 +232,7 @@ logging.info(f"steps_per_epoch = {steps_per_epoch}")
 # Create trainer and execute training action
 train_callback = nemo.core.SimpleLossLoggerCallback(
     tensors=train_tensors,
-    print_func=lambda x: print("Loss: {:.3f}".format(x[0].item())),
+    print_func=lambda x: logging.info("Loss: {:.3f}".format(x[0].item())),
     get_tb_values=lambda x: [["loss", x[0]]],
     tb_writer=nf.tb_writer,
 )

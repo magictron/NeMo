@@ -226,13 +226,13 @@ def create_pipeline(
             name='Punctuation',
         )
 
-        punct_loss = CrossEntropyLossNM(logits_dim=3, weight=class_weights)
+        punct_loss = CrossEntropyLossNM(logits_ndim=3, weight=class_weights)
 
         # Initialize capitalization loss
         capit_classifier = capit_classifier(
             hidden_size=hidden_size, num_classes=len(capit_label_ids), dropout=dropout, name='Capitalization'
         )
-        capit_loss = CrossEntropyLossNM(logits_dim=3)
+        capit_loss = CrossEntropyLossNM(logits_ndim=3)
 
         task_loss = LossAggregatorNM(num_inputs=2)
 
@@ -279,7 +279,7 @@ logging.info(f"steps_per_epoch = {steps_per_epoch}")
 # Create trainer and execute training action
 train_callback = nemo.core.SimpleLossLoggerCallback(
     tensors=losses + train_logits,
-    print_func=lambda x: print("Loss: {:.3f}".format(x[0].item())),
+    print_func=lambda x: logging.info("Loss: {:.3f}".format(x[0].item())),
     get_tb_values=lambda x: [["loss", x[0]]],
     tb_writer=nf.tb_writer,
 )
